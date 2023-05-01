@@ -6,10 +6,43 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
+/**
+ * @group Products
+ *
+ * APIs for managing Products
+ *
+ * @header Content-Type application/json
+ * @authenticated
+ */
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Get All Products
+     *
+     * This endpoint is used to fetch all products available in the database.
+     *
+     * @queryParam page int The page number from pagination. Defaut is '1' Example: 1
+     *
+     * @response scenario="Get All Products"{
+     *"data": [
+     *    {
+     *    "id": 1,
+     *        "productName": "quo",
+     *        "productPrice": "$15",
+     *        "discountedPrice": "$13.5",
+     *        "discount": "$1.5",
+     *        "productDescription": "Ut rerum aut deleniti eveniet ad et ullam perferendis."
+     *    },
+     *    {
+     *        "id": 2,
+     *        "productName": "Laptop",
+     *        "productPrice": "$500",
+     *        "discountedPrice": "$450",
+     *        "discount": "$50",
+     *        "productDescription": "This is a brand new laptop"
+     *    }
+     *  ]
+     *}
      */
 
     public function index()
@@ -28,7 +61,24 @@ class ProductController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Add Products to the Database
+     *
+     * This endpoint is used to add a product to the database.
+     *
+     * @bodyParam name string required Example: Laptop
+     * @bodyParam price double required Example: 199
+     * @bodyParam description string required
+     *
+     *@response 201 scenario="Add a Product"{
+     * "data": {
+     *   "id": 2,
+     *   "productName": "veritatis",
+     *   "productPrice": "$30",
+     *   "discountedPrice": "$27",
+     *   "discount": "$3",
+     *   "productDescription": "Esse cupiditate eaque qui laboriosam quis id."
+     * }
+     *}
      */
 
     public function store(Request $request)
@@ -50,7 +100,22 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Get a Single Product
+     *
+     * This endpoint is used to return a single products from the database.
+     *
+     * @urlParam id integer required The ID of the product.
+     *
+     * @response scenario="Get a Single Product"{
+     * "data": {
+     *   "id": 2,
+     *   "productName": "veritatis",
+     *   "productPrice": "$30",
+     *   "discountedPrice": "$27",
+     *   "discount": "$3",
+     *   "productDescription": "Esse cupiditate eaque qui laboriosam quis id."
+     * }
+     *}
      */
 
     public function show(Product $product)
